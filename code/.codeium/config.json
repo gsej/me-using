@@ -1,6 +1,6 @@
 {
   "project": {
-    "name": "me-tracker",
+    "name": "me-using",
     "description": "A personal weight tracking application with Angular frontend and .NET backend"
   },
   "design_rules": {

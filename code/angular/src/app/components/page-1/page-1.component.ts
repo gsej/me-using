@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { WeightInputComponent } from '../weight-input/weight-input.component';
+import { CurrentlyUsingComponent } from '../currently-using/currently-using.component';
 
 @Component({
   selector: 'app-page-1',
   standalone: true,
-  imports: [WeightInputComponent],
+  imports: [CurrentlyUsingComponent],
   templateUrl: './page-1.component.html',
   styleUrl: './page-1.component.scss'
 })

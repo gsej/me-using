@@ -4,7 +4,7 @@ This file contains general instructions for GitHub Copilot when interacting with
 
 ## Project Context
 
-**Project Name**: me-tracker
+**Project Name**: me-using
 **Description**: A personal weight tracking application with Angular frontend and .NET backend
 
 ## Design Rules

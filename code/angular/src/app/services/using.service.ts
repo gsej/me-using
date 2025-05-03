@@ -3,22 +3,19 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { SettingsService } from '../settings/settings.service';
+import { API_KEY_STORAGE_KEY } from '../constants';
 
-export interface WeightRecord {
-  date: string;
-  weight: number;
+export interface UsingRecord {
+  name: string;
 }
 
-export interface WeightsCollection {
-  weightRecords: WeightRecord[];
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class WeightService {
-  private weightRecordsSubject = new BehaviorSubject<WeightRecord[]>([]);
-  public weightRecords$ = this.weightRecordsSubject.asObservable();
+export class UsingService {
+  private usingRecordsSubject = new BehaviorSubject<UsingRecord>({ name: 'Noone' });
+  public usingRecord$ = this.usingRecordsSubject.asObservable();
 
   private isLoadingSubject = new BehaviorSubject<boolean>(false);
   public isLoading$ = this.isLoadingSubject.asObservable();
@@ -37,22 +34,18 @@ export class WeightService {
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'x-api-key': localStorage.getItem('api_key') || ''
+      'x-api-key': localStorage.getItem(API_KEY_STORAGE_KEY) || ''
     });
   }
 
-  loadWeightRecords(): void {
+  loadUsing(): void {
     this.isLoadingSubject.next(true);
     this.errorSubject.next(null);
 
-    this.http.get<WeightsCollection>(`${this.apiUrl}/api/backup`, { headers: this.getHeaders() })
+    this.http.get<UsingRecord>(`${this.apiUrl}/api/using`, { headers: this.getHeaders() })
       .subscribe({
         next: (data) => {
-          const formattedRecords = data.weightRecords.map(record => ({
-            date: new Date(record.date).toLocaleDateString(),
-            weight: record.weight
-          }));
-          this.weightRecordsSubject.next(formattedRecords);
+          this.usingRecordsSubject.next(data);
           this.isLoadingSubject.next(false);
         },
         error: (error) => {
@@ -63,18 +56,17 @@ export class WeightService {
       });
   }
 
-  addWeightRecord(weight: number): Observable<any> {
+  setUsing(name: string): Observable<any> {
     const payload = {
-      weight: weight,
-      date: new Date()
+      name: name,
     };
 
-    return this.http.post(`${this.apiUrl}/api/weight`, payload, { headers: this.getHeaders() })
+    return this.http.post(`${this.apiUrl}/api/using`, payload, { headers: this.getHeaders() })
       .pipe(
         tap(() => {
-          // After successfully adding a new record, refresh the list
-          this.loadWeightRecords();
+          this.loadUsing();
         })
       );
   }
+
 }

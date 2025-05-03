@@ -6,7 +6,6 @@ import { SettingsService } from './settings/settings.service';
 import { PiComponent } from './components/pi/pi.component';
 import { ApiKeyInputComponent } from './components/api-key-input/api-key-input.component';
 import { Page1Component } from './components/page-1/page-1.component';
-import { Page2Component } from './components/page-2/page-2.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ import { Page2Component } from './components/page-2/page-2.component';
     ReactiveFormsModule,
     CommonModule,
     Page1Component,
-    Page2Component,
     PiComponent,
     ApiKeyInputComponent],
   templateUrl: './app.component.html',

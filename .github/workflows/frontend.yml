@@ -27,7 +27,7 @@ jobs:
       - run: npm install
         working-directory: ${{ env.WORKING_DIR }}
 
-      - run: npm run build -- --base-href /me-tracker/
+      - run: npm run build -- --base-href /me-using/
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: populate settings.json

@@ -1,0 +1,37 @@
+<div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+
+  @if (error) {
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    <p>{{ error }}</p>
+    <button class="mt-2 bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm" (click)="onRetry()">
+      Try Again
+    </button>
+  </div>
+  }
+
+  @if (!isLoading && !error) {
+
+  <div class="mb-4">
+    <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">{{ currentlyUsing.name }} is using it</label>
+  </div>
+  <button type="button" (click)="setUsing('G')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+    G wants to use it
+  </button>
+  <button type="button" (click)="setUsing('A')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+    A wants to use it
+  </button>
+  <button type="button" (click)="setUsing('Noone')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
+    Finished using it
+  </button>
+
+  <div *ngIf="status" class="mt-4">
+    <div class="text-center">
+      <div [ngClass]="{'text-green-500': status === 'Success', 'text-red-500': status === 'Error'}">
+        {{status}}
+        <span *ngIf="errorStatusCode"> ({{errorStatusCode}})</span>
+      </div>
+    </div>
+  </div>
+  }
+
+</div>
