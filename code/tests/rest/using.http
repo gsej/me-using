@@ -1,0 +1,31 @@
+
+@baseUrl = http://localhost:5200/api
+
+### Get uaing data
+GET {{baseUrl}}/using
+X-Api-Key: apikey
+
+### create entry
+# @name updateUsing
+POST {{baseUrl}}/using
+Content-Type: application/json
+X-Api-Key: apikey
+
+{           
+    "name": "Kylie"
+}
+
+
+### get using entry
+
+@locationHeader = {{updateUsing.response.headers.Location}}
+
+### {{locationHeader}}
+
+GET {{locationHeader}}
+X-Api-Key: apikey
+
+### delete created entry
+
+DELETE {{locationHeader}}
+X-Api-Key: apikey
