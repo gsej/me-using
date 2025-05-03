@@ -5,7 +5,7 @@ This file contains general instructions for GitHub Copilot when interacting with
 ## Project Context
 
 **Project Name**: me-using
-**Description**: A personal weight tracking application with Angular frontend and .NET backend
+**Description**: An app to indicate which of two people is currently using a resource with Angular frontend and .NET backend
 
 ## Design Rules
 

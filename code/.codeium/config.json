@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "me-using",
-    "description": "A personal weight tracking application with Angular frontend and .NET backend"
+    "description": "An app to indicate which of two people is currently using a resource with Angular frontend and .NET backend"
   },
   "design_rules": {
     "general": [

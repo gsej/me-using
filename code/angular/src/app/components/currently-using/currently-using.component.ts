@@ -46,7 +46,6 @@ export class CurrentlyUsingComponent implements OnInit, OnDestroy {
       })
     );
 
-    // Load the weight records
     this.loadCurrentlyUsing();
   }
 
@@ -60,7 +59,7 @@ export class CurrentlyUsingComponent implements OnInit, OnDestroy {
           this.clearStatusAfterDelay();
         },
         error: (error) => {
-          console.error('Error submitting weight:', error);
+          console.error('Error setting current user:', error);
           this.status = 'Error';
           this.errorStatusCode = error.status || 'Unknown';
           this.clearStatusAfterDelay();

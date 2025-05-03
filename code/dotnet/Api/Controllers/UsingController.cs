@@ -34,7 +34,7 @@ public class UsingController : ControllerBase
 
         if (entity == null)
         {
-            entity = UsingEntity.Create("Noone");
+            entity = UsingEntity.Create("No one");
             await tableClient.AddEntityAsync(entity);
         }
 
@@ -54,7 +54,7 @@ public class UsingController : ControllerBase
 
         if (entity == null)
         {
-            entity = UsingEntity.Create("Noone");
+            entity = UsingEntity.Create("No one");
             await tableClient.AddEntityAsync(entity);
         }
         else
