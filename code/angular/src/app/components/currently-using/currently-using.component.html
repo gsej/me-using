@@ -11,18 +11,21 @@
 
   @if (!isLoading && !error) {
 
-  <div class="mb-4">
-    <label for="weight" class="block text-sm font-medium text-gray-700 mb-1">{{ currentlyUsing.name }} is using it</label>
+  <div class="mb-6 text-center">
+    <p class="text-base font-medium text-gray-800 mb-2">{{ currentlyUsing.name }} is using it</p>
   </div>
+  @if (currentlyUsing.name === 'Noone') {
   <button type="button" (click)="setUsing('G')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
     G wants to use it
   </button>
   <button type="button" (click)="setUsing('A')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
     A wants to use it
   </button>
+  } @else {
   <button type="button" (click)="setUsing('Noone')" class="w-full bg-blue-500 text-white my-2 py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed">
     Finished using it
   </button>
+  }
 
   <div *ngIf="status" class="mt-4">
     <div class="text-center">
