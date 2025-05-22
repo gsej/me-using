@@ -16,7 +16,8 @@ public class UsingController : ControllerBase
 {
     private readonly TableServiceClient _tableServiceClient;
   
-    private const string TableName = "Using";
+    private const string UsingTableName = "Using";
+    private const string HistoryTableName = "History";
 
     public UsingController(TableServiceClient tableServiceClient)
     {
@@ -26,8 +27,7 @@ public class UsingController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetUsing()
     {
-        var tableClient = _tableServiceClient.GetTableClient(TableName);
-
+        var tableClient = _tableServiceClient.GetTableClient(UsingTableName);
         await tableClient.CreateIfNotExistsAsync();
         
         var entity = await GetUsingEntity(tableClient);
@@ -39,28 +39,33 @@ public class UsingController : ControllerBase
         }
 
         return Ok(new UsingRecord(entity.Name));
-    }
-
-    
+    }    
 
     [HttpPost]
     public async Task<IActionResult> PostUsingRecord([FromBody] UpdateUsingRequest request)
     {
-        var tableClient = _tableServiceClient.GetTableClient(TableName);
+        var usingTableClient = _tableServiceClient.GetTableClient(UsingTableName);
+        await usingTableClient.CreateIfNotExistsAsync();
         
-        await tableClient.CreateIfNotExistsAsync();
+        var historyTableClient = _tableServiceClient.GetTableClient(HistoryTableName);
+        await historyTableClient.CreateIfNotExistsAsync();
         
-        var entity = await GetUsingEntity(tableClient);
+        var entity = await GetUsingEntity(usingTableClient);
 
         if (entity == null)
         {
             entity = UsingEntity.Create("No one");
-            await tableClient.AddEntityAsync(entity);
+            await usingTableClient.AddEntityAsync(entity);
+            var historyEntity = UsingEntity.CreateHistory(entity);
+            await historyTableClient.AddEntityAsync(historyEntity);
         }
         else
         {
             entity.Name = request.Name;
-            await tableClient.UpdateEntityAsync(entity, ETag.All, TableUpdateMode.Replace);
+            await usingTableClient.UpdateEntityAsync(entity, ETag.All, TableUpdateMode.Replace);
+
+            var historyEntity = UsingEntity.CreateHistory(entity);
+            await historyTableClient.AddEntityAsync(historyEntity);
         }
         
         Response.Headers.Append("Location", $"/api/using");
